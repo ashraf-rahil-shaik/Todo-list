@@ -143,7 +143,7 @@ li:hover +.trash-btn{
   }
   
    .fall {
-    /* transform: translateY(10rem) rotateZ(20deg); */
+    
     opacity: 0;
   } 
   
@@ -152,7 +152,7 @@ li:hover +.trash-btn{
     opacity: 0.5;
   }
   
-  /*CUSTOM SELECTOR */
+ 
   select {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -164,7 +164,7 @@ li:hover +.trash-btn{
     background-image: none;
   }
   
-  /* Custom Select */
+ 
   .select {
     margin: 1rem;
     position: relative;
@@ -176,7 +176,7 @@ li:hover +.trash-btn{
     cursor: pointer;
     width: 12rem;
   }
-  /* Arrow */
+ 
   .select::after {
     content: "\25BC";
     position: absolute;
