@@ -4,7 +4,7 @@
     box-sizing: border-box;
   }
   body {
-    background-color:#f5f5f5;
+    background-color:#0c31ac;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -15,7 +15,7 @@
   header {
     font-size:3em ;
     font-weight:100;
-    color: rgba(175, 47, 47, 0.15);
+    color: rgb(243, 243, 243);
    font-family: sans-serif;
   }
 
@@ -43,8 +43,8 @@
     padding: 16px 16px 16px 60px;
     font-size: 2rem;
     border: none;
-    background: rgba(255, 255, 255);
-    box-shadow: inset 0 -2px 1px rgb(0 0 0 / 3%);
+    background: rgb(255, 255, 255);
+    box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.267);
   }
   ::placeholder{
       font-family: inherit;
@@ -73,12 +73,14 @@
     width:575px;
         white-space: pre-line;
         word-break: break-all;
+
         padding: 15px 60px 15px 15px;
         margin-left: 45px;
         display: block;
         line-height: 1.2;
         transition: color 0.4s;
     margin-top:-16px;
+    
   }
   
   .todo {
@@ -99,14 +101,16 @@
   .todo li {
     flex: 1;
    list-style-type:none; ;
-    font-size: 24px;
+    font-size: 27px;
     border-bottom: 1px solid #ededed;
     text-decoration: none;
+    
 }
 
 li {
     display: list-item;
     text-align: -webkit-match-parent;
+    
 }
   
   .trash-btn,
@@ -124,13 +128,12 @@ background: transparent;
 }
 .trash-btn{
     background:transparent;
-    color:rgba(177, 11, 11, 0.829);
-    display:none;
+    color:rgba(255, 0, 0, 0.829);
+    
     font-weight: 800;
+    
 }
-li:hover +.trash-btn{
-    display:block;
-}
+
   
   .todo-item {
     padding: 0rem 0.5rem;
@@ -149,41 +152,29 @@ li:hover +.trash-btn{
   
   .completed {
     text-decoration: line-through;
-    opacity: 0.5;
+    opacity: 0.9;
+    background-color: rgb(179, 178, 178);
+    
   }
   
  
-  select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    -ms-appearance: none;
-    appearance: none;
-    outline: 0;
-    box-shadow: none;
-    border: 0 !important;
-    background-image: none;
-  }
+ .filter-todo{
+   width:500px;
+   height:55px;
+   background-color: aliceblue;
+   margin: 0;
+   padding-top:-200px ;
+   margin-top: -15px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+ }
+ .all,.over,.uncompleted{
+   margin:20px;
+   border: none;
+   background-color:aliceblue;
+   cursor: pointer;
+   
+   font-family:Verdana, Geneva, Tahoma, sans-serif;
+ }
   
- 
-  .select {
-    margin: 1rem;
-    position: relative;
-    overflow: hidden;
-  }
-  select {
-    color: #ff6f47;
-    font-family: "Poppins", sans-serif;
-    cursor: pointer;
-    width: 12rem;
-  }
- 
-  .select::after {
-    content: "\25BC";
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 1rem;
-    background: #ff6f47;
-    cursor: pointer;
-    pointer-events: none;
-  }

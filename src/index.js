@@ -8,12 +8,31 @@ document.addEventListener("DOMContentLoaded", getTodos);
 todoButton.addEventListener("click", addTodo);
 todoList.addEventListener("click", deleteTodo);
 filterOption.addEventListener("click", filterTodo);
+//filterOption.addEventListener("DOMcontentLoaded", footerDisplay);
+
+
+
+
+function footerDisplay(){
+  
+
+  const listNum =localStorage.getItem("todos");
+
+if (listNum.length <=2) {
+return filterOption.style.display = "none";
+ } else {
+ 
+  return filterOption.style.display="flex";
+ }
+}
+footerDisplay()
 
 
 
 function addTodo(e) {
   
   e.preventDefault();
+  
   
   const todoDiv = document.createElement("div");
   todoDiv.classList.add("todo");
@@ -40,6 +59,7 @@ function addTodo(e) {
   todoDiv.appendChild(trashButton);
  
   todoList.appendChild(todoDiv);
+  
 }
 
 function deleteTodo(e) {
@@ -83,8 +103,11 @@ function filterTodo(e) {
           todo.style.display = "none";
         }
     }
+ 
   });
+
 }
+
 
 function saveLocalTodos(todo) {
   let todos;
@@ -106,6 +129,7 @@ function removeLocalTodos(todo) {
   const todoIndex = todo.children[0].innerText;
   todos.splice(todos.indexOf(todoIndex), 1);
   localStorage.setItem("todos", JSON.stringify(todos));
+
 }
 
 function getTodos() {
@@ -139,3 +163,6 @@ function getTodos() {
     todoList.appendChild(todoDiv);
   });
 }
+
+
+
