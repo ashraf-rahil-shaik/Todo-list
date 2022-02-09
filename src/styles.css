@@ -177,4 +177,19 @@ background: transparent;
    
    font-family:Verdana, Geneva, Tahoma, sans-serif;
  }
-  
+  .info{
+  display:block;
+      margin: 65px auto 0;
+      color: #eeeeee;
+      font-size: 10px;
+     font-style: italic;
+     font-family: sans-serif;
+      text-align: center;
+      font-weight: 400;
+      line-height: 20px;
+  }
+  a{
+    text-decoration: none;
+    color:rgb(255, 255, 255);
+    font-weight:600 ;
+  }
