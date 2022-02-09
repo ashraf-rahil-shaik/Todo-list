@@ -18,14 +18,13 @@ function footerDisplay(){
   
 
   const listNum =localStorage.getItem("todos");
-for(let i=2;i>=listNum.length;i++){
-if (i <=2) {
-return filterOption.style.display = "none";
+
+if (listNum.length > 2) {
+return filterOption.style.display = "flex";
  } else {
  
-  return filterOption.style.display="flex";
+  return filterOption.style.display="none";
  }
-}
 }
 footerDisplay()
 
