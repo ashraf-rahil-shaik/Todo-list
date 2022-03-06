@@ -129,7 +129,7 @@ background: transparent;
 .trash-btn{
     background:transparent;
     color:rgba(255, 0, 0, 0.829);
-    
+    visibility: hidden;
     font-weight: 800;
     
 }
@@ -156,7 +156,20 @@ background: transparent;
     background-color: rgb(179, 178, 178);
     
   }
-  
+  .deletebutton {
+    border-color: rgb(107, 0, 0);
+    background: transparent;
+    border: none;
+    padding: 0;
+    height: 50px;
+    width: 50px;
+    visibility: hidden;
+    font-size: x-large;
+    
+  }
+  .todo-container:hover > .trash-btn {
+    visibility: visible;
+  }
  
  .filter-todo{
    width:500px;
