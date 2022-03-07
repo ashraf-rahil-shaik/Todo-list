@@ -1,208 +1,167 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  body {
-    background-color:#0c31ac;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    
-  }
-  header {
-    font-size:3em ;
-    font-weight:100;
-    color: rgb(243, 243, 243);
-   font-family: sans-serif;
-  }
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body{
+  width: 100%;
+  height: 100vh;
+  background-color:#f5f5f5;
+  font-family: system-ui;
+}
+.banner-con{
+  width: 100%;
+  height: 60vh;
+}
+.banner{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.content{
+  width: 600px;
+  display: flex;
+  justify-content: space-between;
 
+}
+.content h1{
   
-  header,
-  form {
-    min-height: 2.2vh;
-    padding: 0;
-    margin:0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-  }
-  .todo-input{
-    width:500px;
-    margin: 0;
-  }
-
-  input:focus, textarea:focus, select:focus{
-    outline: none;
-  }
-  form input,
-  form button {
-    padding: 16px 16px 16px 60px;
-    font-size: 2rem;
-    border: none;
-    background: rgb(255, 255, 255);
-    box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.267);
-  }
-  ::placeholder{
-      font-family: inherit;
-      font-style: italic;
-      font-size: 24px;
-      color: rgb(228, 228, 228);
-
-  }
-  form button {
-    color: #ff6f47;
-    background: #f7fffe;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  form button:hover {
-    background: #ff6f47;
-    color: white;
-  }
-  .todo-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .todo-list {
-    width:575px;
-        white-space: pre-line;
-        word-break: break-all;
-
-        padding: 15px 60px 15px 15px;
-        margin-left: 45px;
-        display: block;
-        line-height: 1.2;
-        transition: color 0.4s;
-    margin-top:-16px;
-    
-  }
-  
-  .todo {
-    margin: 0.5rem;
-    background: white;
-    font-size: 1.5rem;
-    color: black;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: all 1s ease;
-    padding:0;
-    margin: 0;
-  }
-  .filter-todo {
-    padding: 1rem;
-  }
-  .todo li {
-    flex: 1;
-   list-style-type:none; ;
-    font-size: 27px;
-    border-bottom: 1px solid #ededed;
-    text-decoration: none;
-    
+  width: 100%;
+  font-size: 100px;
+  font-weight: 100;
+  text-align: center;
+  color: rgba(175, 47, 47, 0.15);
+font-family: sans-serif;
 }
 
-li {
-    display: list-item;
-    text-align: -webkit-match-parent;
-    
-}
-  
-  .trash-btn,
-  .complete-btn {
-    
-    color:white;
-    border: none;
-    padding: 1rem;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-  
-.complete-btn{
-background: transparent;
-}
-.trash-btn{
-    background:transparent;
-    color:rgba(255, 0, 0, 0.829);
-    visibility: hidden;
-    font-weight: 800;
-    
-}
 
-  
-  .todo-item {
-    padding: 0rem 0.5rem;
-  }
-  
-  .fa-xmark,
-  .fa-check {
-    pointer-events: none;
-   
-  }
-  
-   .fall {
-    
-    opacity: 0;
-  } 
-  
-  .completed {
-    text-decoration: line-through;
-    opacity: 0.9;
-    background-color: rgb(179, 178, 178);
-    
-  }
-  .deletebutton {
-    border-color: rgb(107, 0, 0);
-    background: transparent;
-    border: none;
-    padding: 0;
-    height: 50px;
-    width: 50px;
-    visibility: hidden;
-    font-size: x-large;
-    
-  }
-  .todo-container:hover > .trash-btn {
-    visibility: visible;
-  }
+.todo{
+  width: 600px;
+  max-height: 498px;
+}
+form{
+  width: 100%;
+  height: 83px;
+}
+form input{
+  padding: 16px 16px 16px 60px;
+  border: none;
+  background: rgba(0, 0, 0, 0.003);
+
+width:100%;
+height:60px;
+  padding: 15px 30px;
  
- .filter-todo{
-   width:500px;
-   height:55px;
-   background-color: aliceblue;
-   margin: 0;
-   padding-top:-200px ;
-   margin-top: -15px;
-   display: flex;
-   justify-content: center;
-   align-items: center;
- }
- .all,.over,.uncompleted{
-   margin:20px;
-   border: none;
-   background-color:aliceblue;
-   cursor: pointer;
-   
-   font-family:Verdana, Geneva, Tahoma, sans-serif;
- }
-  .info{
-  display:block;
-      margin: 65px auto 0;
-      color: #eeeeee;
-      font-size: 10px;
-     font-style: italic;
-     font-family: sans-serif;
-      text-align: center;
-      font-weight: 400;
-      line-height: 20px;
-  }
-  a{
-    text-decoration: none;
-    color:rgb(255, 255, 255);
-    font-weight:600 ;
-  }
+  margin-top: 3.5rem;
+  background: hsl(0, 0%, 100%);
+  font-size: 24px;
+  color: rgb(0, 0, 0);
+  letter-spacing: 1px;
+  outline: none;
+  border: none;
+  box-shadow: 0px 1px #dbdada9a;
+}
+input::placeholder{
+  color: rgba(158, 157, 157, 0.842);
+  letter-spacing: 2px;
+  font-style: italic;
+  font-size: 24px;
+}
+.list{
+  width: 100%;
+  /* max-height: 330px; */
+  margin-top: 2rem
+}
+.todo-con{
+  width: 100%;
+  background-color: hsl(0, 2%, 80%);
+  box-shadow: 0px 1px #dbdada9a;
+ 
+}
+.todo-li{
+  display: flex;
+  background-color: hsl(0, 0%, 100%);
+  padding: 1rem 0.9rem;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  font-style: italic;
+  font-size: 24px;
+  align-items: center;
+}
+.todo-li p{
+  width: 92%;
+  color: rgb(70, 70, 70);
+}
+.todo-li .check{
+  width: 20px;
+  height: 20px;
+  border: 1px solid hsl(0, 0%, 99%);
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+.todo-li .check img{
+  transform: scale(0);
+  transition: all 0.3s ease;
+}
+.todo-li .close{
+  background: transparent;
+  border: none;
+  outline: none;
+  opacity: 0;
+  transition: all 0.4s ease;
+  cursor: pointer;
+}
+.todo-li:hover .close{
+  opacity: 1;
+}
+.hr{
+  width: 100%;
+  background: hsl(233, 14%, 35%);
+  height: 0.9px;
+}
+.info{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  color: hsl(234, 11%, 52%);
+  padding: 1rem 0.9rem;
+  background: hsl(0, 0%, 100%);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  cursor: pointer;
+}
+.choice{
+  display: flex;
+}
+.choice p{
+  padding:  0 5px;
+}
+.info p:hover{
+color: hsl(220, 98%, 61%);
+}
+.active{
+  color: hsl(220, 98%, 61%);
+}
+.active-check{
+background-color: rgb(158, 158, 158);
+
+}
+
+.active-check img{
+  transform: scale(1) !important;
+}
+.complete{
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+.close{
+  color:rgb(199, 10, 10);
+  font-size: large;
+  font-size: 20px;
+font-weight:600;
+}
