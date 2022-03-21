@@ -1,105 +1,192 @@
-let form=document.querySelector("form");
-let text=document.getElementById("text");
-let todoCon=document.querySelector(".todo-con")
-form.addEventListener('submit', (e)=>{
-    e.preventDefault();
-    addtodo();
-})
-let todos=JSON.parse(localStorage.getItem("todos"));
-if(todos){
-    todos.forEach(element => {
-        addtodo(element)
-    });
-}
-function addtodo(elem) {
-    let todoColl=document.createElement("div");
-    todoColl.classList.add("todocoll")
-    let todotext=text.value;
-    if(elem){
-        todotext=elem.text;
-    }
-    if(todotext){
-    todoColl.innerHTML=`
-    <div class="todo-li">
-    <div class="check ${elem && elem.complete?"active-check":""}"><img src="./src/icon-check.svg" alt=""></div>
-    <p class="ptag ${elem && elem.complete?"complete":""}">${todotext}</p>
-    <button class="close">X</button>
-  </div>
-  <div class="hr"></div>`;
-    todoCon.appendChild(todoColl);
-    updateLs()
-    }
-    let close=todoColl.querySelector(".close");
-    close.addEventListener("click", ()=>{
-        todoColl.remove();
-        updateLs();
-    })
-    let check=todoColl.querySelector(".check");
-    check.addEventListener('click', ()=>{
-        check.classList.toggle("active-check")
-        todoColl.children[0].children[1].classList.add("complete")  
-        updateLs()
-    })
-    text.value="";
-}
+const tempEl = document.createElement("div");
+const newVal = (value) => {
+	if (value) {
+		if (typeof value === "object" && value.__html__) {
+			return value.__html__;
+		}
+		if (Array.isArray(value)) {
+			return value.map(newVal).join("");
+		}
+	}
+	tempEl.textContent = value;
+	return tempEl.innerHTML;
+};
+const html = (parts, ...values) => {
+	return {
+		__html__: parts
+			.map((part, i) => {
+				return part + (i < values.length ? newVal(values[i]) : "");
+			})
+			.join(""),
+	};
+};
 
-function updateLs() {
-    let ptag=document.querySelectorAll(".ptag")
-    let arr=[];
-    ptag.forEach(element => {
-        arr.push({
-            text:element.innerText,
-            complete:element.classList.contains("complete")
-        })
-    });
-    localStorage.setItem("todos",JSON.stringify(arr));
+const todoApp = (state) => {
+	const remaining = state.items.filter((item) => !item.complete);
+	let toggleAll = "";
+	if (state.items.length) {
+		toggleAll = html`
+			<input id="toggle-all"  type="checkbox"  class="toggle-all" ${remaining.length ? "" : "checked"} onclick="toggleAll();" />
+			<label for="toggle-all">Mark all as complete</label>`;
+	}
+	return html`<div class="todoapp">
+		${header()}
+		<section class="main" ${state.items.length ? "" : 'style="display: none;"'}>
+			${toggleAll}
+			<ul class="todo-list">
+				${state.items.map(todo)}
+			</ul>
+			${footer(remaining, state.items)}
+		</section>
+	</div>`;
+};
+const header = () =>
+	html`<header class="header">
+		<h1>todos</h1>
+		<input type="text" class="new-todo" id="todoInput"  placeholder="What needs to be done?"  onkeydown="onCreate(event)" autofocus value="${state.newTodo}"/>
+	</header>`;
+const todo = (item, i) => {
+	if (state.filter === "completed" && !item.complete) return "";
+	if (state.filter === "active" && item.complete) return "";
+	let body = "";
+	if (item.editing) {
+		body = html`
+			<input type="text" class="edit" autofocus value="${item.name}" onkeydown="onSave(event, ${i})" onblur="onSave(event, ${i})"/>
+		`;
+	} 
+	else {
+		body = html`
+			<div class="view">
+				<input type="checkbox" class="toggle" ${item.complete ? "checked" : ""} onclick="toggle(${i});"
+				/>
+				<label ondblclick="startEditing(${i})">${item.name}</label>
+				<button class="destroy" onClick="remove(${i})" />
+			</div>
+		`;
+	}
+	return html`
+		<li class="${item.complete ? "completed" : ""} ${item.editing ? "editing" : ""}">
+			${body}
+		</li>
+	`;
+};
+const footer = (remaining, items) => {
+	let clearCompleted = "";
+	if (remaining.length !== items.length) {
+		clearCompleted = html`
+		<button
+			class="clear-completed"
+			onClick="clearCompleted()">
+			Clear completed
+		</button>`;
+	}
+	return html`<footer class="footer">
+		<span class="todo-count">
+			<strong>
+				${remaining.length ? remaining.length : "0"}
+			</strong>
+			${remaining.length === 1 ? "item" : "items"} left
+		</span>
+		<ul class="filters">
+			<li>
+				<a class="${state.filter === "" ? "selected" : ""}" onClick="updateFilter('')">
+					All
+				</a>
+			</li>
+			<li>
+				<a class="${state.filter === "active" ? "selected" : ""}" onClick="updateFilter('active')">Active</a>
+			</li>
+			<li>
+				<a class="${state.filter === "completed" ? "selected" : ""}" onClick="updateFilter('completed')">
+					Completed
+				</a>
+			</li>
+		</ul>
+		${clearCompleted}
+	</footer>`;
+};
+
+function toggleAll() {
+	const hasRemaining = state.items.filter((i) => !i.complete).length != 0;
+	state.items.forEach((i) => (i.complete = hasRemaining));
+	turnTheCrank();
 }
-let info=document.querySelectorAll(".choice p")
-let todoli=document.querySelectorAll(".todocoll")
-console.log(info);
-info.forEach(element => {
-   element.addEventListener("click", ()=>{
-    info.forEach(item => {
-        item.classList.remove("active");
-    });
-    element.classList.add("active")
-    if(element.innerText=="Active"){
-        todoli.forEach(elem => {
-            if(!elem.children[0].children[1].classList.contains("complete")){
-                elem.style.display="block";
-            }else{
-                elem.style.display="none";
-            }
-        });
-    }else if(element.innerText=="Completed"){
-        todoli.forEach(elem => {
-            if(elem.children[0].children[1].classList.contains("complete")){
-                elem.style.display="block";
-            }else{
-                elem.style.display="none";
-            }
-        });
-    }else{
-        todoli.forEach(elem => {
-            elem.style.display="block";
-        });
-    }
-   })
-});
-let clear=document.querySelector(".clear");
-clear.addEventListener("click", ()=>{
-    todoli.forEach(elem => {
-        if(elem.children[0].children[1].classList.contains("complete")){
-            elem.remove()
-            updateLs();
-        }
-    });
-})
-let left=document.querySelector(".left");
-function setitem() {
-    let activeTodo=document.querySelectorAll(".todo-li .active-check");
-    let diff=todoli.length-activeTodo.length;
-    left.innerText=`${diff} items left`
-    updateLs()
+function clearCompleted() {
+	state.items = state.items.filter((i) => !i.complete);
+	turnTheCrank();
 }
-setitem();
+function onCreate(e) {
+	const text = getFinalText(e);
+	if (text) {
+		state.items.push({
+			name: text,
+			complete: false,
+		});
+		state.newTodo = "";
+		turnTheCrank("todoInput");
+	}
+}
+function onSave(e, i) {
+	if (e.which === 27) {
+		state.items[i].editing = false;
+		e.target.value = state.items[i].name;
+		turnTheCrank();
+		return;
+	}
+	const text = getFinalText(e);
+	if (text) {
+		state.items[i].name = text;
+		state.items[i].editing = false;
+		setItems();
+		turnTheCrank();
+	} else if (text !== null && state.items[i] && state.items[i].editing) {
+		state.items[i].editing = false;
+		state.items.splice(i, 1);
+		setItems();
+		turnTheCrank();
+	}
+}
+function toggle(i) {
+	state.items[i].complete = !state.items[i].complete;
+	turnTheCrank();
+}
+function remove(i) {
+	state.items.splice(i, 1);
+	turnTheCrank();
+}
+function startEditing(i) {
+	state.items[i].editing = true;
+	turnTheCrank();
+}
+function updateFilter(filter) {
+	window.location.hash = filter;
+}
+window.onhashchange = function () {
+	state.filter = window.location.hash.split("#")[1] || "";
+	turnTheCrank();
+};
+const getFinalText = (e) =>
+	e.which === 13 || e.type === "blur" ? e.target.value.trim() : null;
+let state;
+window.onload = () => {
+ const container = document.getElementById("container");
+	const prevstate = window.localStorage.getItem("todos-vanilla-slim");
+	state = {
+		filter: window.location.hash.split("#")[1] || "",
+		newTodo: "",
+		items: (prevstate && JSON.parse(prevstate)) || [],
+	};
+	turnTheCrank(null, () => {
+		document.querySelectorAll(".new-todo")[0].focus();
+		setItems(); 
+	});
+}
+function turnTheCrank(refocus, cb) {
+	requestAnimationFrame(() => {
+		container.innerHTML = todoApp(state).__html__;
+		if (refocus) document.getElementById(refocus).focus();
+		if (cb) cb();
+	});
+}
+const setItems = (window.onbeforeunload = () =>
+	window.localStorage.setItem("todos-vanilla-slim", JSON.stringify(state.items)));
